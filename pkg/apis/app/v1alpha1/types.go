@@ -37,5 +37,5 @@ type NetperfStatus struct {
 	Status          string  `json:"status"`
 	ServerPod       string  `json:"serverPod"`
 	ClientPod       string  `json:"clientPod"`
-	SpeedBitsPerSec float64 `json:"speedBitsPerSec"`
+	SpeedBitsPerSec float64 `json:"speedBitsPerSec(mbps)"`
 }
