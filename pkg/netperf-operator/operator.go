@@ -24,7 +24,7 @@ const (
 )
 
 type Netperfer interface {
-	HandleNetperf(*v1alpha1.Netperf, bool) error
+	HandleNetperf(*v1alpha1.Netperf, bool) error // v1alpha1.Netperf只是一个自定义类型
 	HandlePod(*v1.Pod, bool) error
 }
 
