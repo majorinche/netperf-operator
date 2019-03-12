@@ -187,7 +187,7 @@ func (n *Netperf) newNetperfPod(cr *v1alpha1.Netperf, npType netperfType, restar
 
 func (n *Netperf) registerNetperfServer(cr *v1alpha1.Netperf, serverPod *v1.Pod) error {
 	c := cr.DeepCopy()
-	c.Status.Status = v1alpha1.NetperfPhaseServer
+	c.Status.Status = v1alpha1.NetperfPhaseServer //此处注册服务器时，就会指定状态，状态本事叫啥不重要了
 	c.Status.ServerPod = serverPod.Name
 	return n.provider.Update(c)
 }
@@ -273,11 +273,11 @@ func (n *Netperf) handleClientPodEvent(cr *v1alpha1.Netperf, pod *v1.Pod) error 
 			logrus.Debugf("Error deleting server pod %v: %v", serverPod.Name, err)
 			return err
 		}
-		netperf := cr.DeepCopy()
+		netperf := cr.DeepCopy() //*v1alpha1.Netperf.DeepCopy()，这个是当前netperf的状态，现在准备更改，这个最终对象就是netperf API对象
 		netperf.Status.SpeedBitsPerSec = throughput
 		logrus.Infof("thoughput is: %v", throughput)
 		netperf.Status.Status = v1alpha1.NetperfPhaseDone
-		return n.provider.Update(netperf)
+		return n.provider.Update(netperf) //*Netperf.provider.Update()等价于 kube.Provider.Update()，所以又是调用k8s的更新函数，执行对netperf API对象的更新
 	}
 
 	return nil
