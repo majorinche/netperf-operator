@@ -11,3 +11,7 @@ spec:
     singular: netperf
   scope: Namespaced
   version: v1alpha1
+  additionalPrinterColumns:
+  - JSONPath: .status.speedBitsPerSec(mbps)
+    name: speedBitsPerSec(mbps)
+    type: number
